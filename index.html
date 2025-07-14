@@ -127,7 +127,9 @@
 
     async function fetchItemData(itemName) {
       try {
-        const response = await fetch(`https://api.warframe.market/v1/items/${itemName}/orders`, {
+        const corsProxy = 'https://corsproxy.io/?';
+        const apiUrl = `https://api.warframe.market/v1/items/${itemName}/orders`;
+        const response = await fetch(`${corsProxy}${encodeURIComponent(apiUrl)}`, {
           headers: {
             'accept': 'application/json',
             'platform': 'pc'
@@ -148,6 +150,7 @@
           seller: user
         };
       } catch (error) {
+        console.error(`Error fetching data for ${itemName}:`, error);
         return {
           name: itemName,
           avgPrice: 'Error',
